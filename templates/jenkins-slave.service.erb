@@ -8,11 +8,9 @@ Type=simple
 User=<%= scope['jenkins::slave::slave_user'] %>
 EnvironmentFile=<%= scope['jenkins::params::sysconfdir'] %>/jenkins-slave
 ExecStart=<%= scope['jenkins::slave::slave_home'] %>/jenkins-slave-run
-Restart=always
-RestartSec=60
-StartLimitInterval=0
-SuccessExitStatus=143
-LimitRTPRIO=20
+<% @systemd_props.each do |k,v| -%>
+<%= k %>=<%= v %>
+<% end -%>
 
 [Install]
 WantedBy=multi-user.target

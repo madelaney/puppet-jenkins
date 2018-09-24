@@ -143,6 +143,7 @@ class jenkins::slave (
   Any $swarm_client_args                  = undef,
   Boolean $delete_existing_clients        = false,
   Any $java_cmd                           = '/usr/bin/java',
+  Optional[Hash] $systemd_props           = $jenkins::params::systemd_prop_defaults
 ) inherits jenkins::params {
 
   if versioncmp($version, '3.0') < 0 {
@@ -229,8 +230,9 @@ class jenkins::slave (
 
       if $::systemd {
         jenkins::systemd { 'jenkins-slave':
-          user   => $slave_user,
-          libdir => $slave_home,
+          user          => $slave_user,
+          libdir        => $slave_home,
+          systemd_props => $systemd_props,
         }
       } else {
         file { "${slave_home}/${service_name}-run":

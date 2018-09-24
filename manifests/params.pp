@@ -33,22 +33,29 @@ class jenkins::params {
 
   case $::osfamily {
     'Debian': {
-      $repo                 = true
-      $libdir               = '/usr/share/jenkins'
-      $package_provider     = 'dpkg'
-      $service_provider     = undef
-      $sysconfdir           = '/etc/default'
-      $config_hash_defaults = {
+      $repo                  = true
+      $libdir                = '/usr/share/jenkins'
+      $package_provider      = 'dpkg'
+      $service_provider      = undef
+      $sysconfdir            = '/etc/default'
+      $systemd_prop_defaults = {
+        'Restart'            => 'always',
+        'RestartSec'         => '60',
+        'StartLimitInterval' => '0',
+        'SuccessExitStatus'  => '143',
+      }
+      $config_hash_defaults  = {
         'JAVA_ARGS' => { value => $_java_args },
         'AJP_PORT'  => { value => '-1' },
       }
     }
     'RedHat': {
-      $repo                 = true
-      $libdir               = '/usr/lib/jenkins'
-      $package_provider     = 'rpm'
-      $sysconfdir           = '/etc/sysconfig'
-      $config_hash_defaults = {
+      $repo                  = true
+      $libdir                = '/usr/lib/jenkins'
+      $package_provider      = 'rpm'
+      $sysconfdir            = '/etc/sysconfig'
+      $systemd_prop_defaults = {}
+      $config_hash_defaults  = {
         'JENKINS_JAVA_OPTIONS' => { value => $_java_args },
         'JENKINS_AJP_PORT'     => { value => '-1' },
       }
@@ -68,12 +75,13 @@ class jenkins::params {
       }
     }
     'Archlinux': {
-      $repo                 = false
-      $libdir               = '/usr/share/java/jenkins/'
-      $package_provider     = 'pacman'
-      $service_provider     = undef
-      $sysconfdir           = '/etc/conf.d'
-      $config_hash_defaults = {
+      $repo                  = false
+      $libdir                = '/usr/share/java/jenkins/'
+      $package_provider      = 'pacman'
+      $service_provider      = undef
+      $sysconfdir            = '/etc/conf.d'
+      $systemd_prop_defaults = {}
+      $config_hash_defaults  = {
         # Archlinux's jenkins package uses it's own variables
         # which are not compatible with these.
         #'JENKINS_JAVA_OPTIONS' => { value => $_java_args },
@@ -81,12 +89,13 @@ class jenkins::params {
       }
     }
     default: {
-      $repo                 = true
-      $libdir               = '/usr/lib/jenkins'
-      $package_provider     = undef
-      $service_provider     = undef
-      $sysconfdir           = '/etc/sysconfig'
-      $config_hash_defaults = {
+      $repo                  = true
+      $libdir                = '/usr/lib/jenkins'
+      $package_provider      = undef
+      $service_provider      = undef
+      $sysconfdir            = '/etc/sysconfig'
+      $systemd_prop_defaults = {}
+      $config_hash_defaults  = {
         'JENKINS_JAVA_OPTIONS' => { value => $_java_args },
         'JENKINS_AJP_PORT'     => { value => '-1' },
       }
