@@ -60,3 +60,5 @@ DELETE_EXISTING_CLIENTS="<%= 'true' if @delete_existing_clients -%>"
 
 # "<name>=<path> [<name>=<path> ...]"
 TOOL_LOCATIONS="<%= @_real_tool_locations %>"
+
+JENKINS_SLAVE_ARGS="-mode $JENKINS_SLAVE_MODE -executors $EXECUTORS $CREDENTIALS_ARG $NAME_ARG $MASTER_URL_ARG $LABELS_ARG $FSROOT_ARG $AUTO_DISCOVERY_ADDRESS_ARG $TOOL_LOCATIONS_ARG $DESCRIPTION_ARG $OTHER_ARGS"
